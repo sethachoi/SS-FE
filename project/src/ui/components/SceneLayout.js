@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import Grid from '@material-ui/core/Grid'
+import { Grid } from '@material-ui/core'
+
 import blueGrey from '@material-ui/core/colors/blueGrey'
 
 type Props = {
@@ -19,13 +20,9 @@ const ImageOverlay = styled.div({
   position: 'absolute'
 })
 
-const SceneContainer = styled.div({
-  marginTop: '8px',
-  flexGrow: '1'
-})
-
 const SceneGrid = styled(Grid)({
-  height: '100%'
+  height: '100%',
+  marginTop: '8px'
 })
 
 const SideImage = styled.div(({ src }) => ({
@@ -38,22 +35,17 @@ const SideImage = styled.div(({ src }) => ({
   position: 'relative'
 }))
 
-const SceneLayout = ({ children, sideImage }: Props) => {
-
-  return (
-    <SceneContainer>
-      <SceneGrid container spacing={16}>
-        <Grid item xs={4}>
-          <SideImage src={sideImage}>
-            <ImageOverlay />
-          </SideImage>>
-        </Grid>
-        <Grid item xs={8}>
-          {children}
-        </Grid>
-      </SceneGrid>
-    </SceneContainer>
-  )
-}
+const SceneLayout = ({ children, sideImage }: Props) => (
+  <SceneGrid container spacing={16}>
+    <Grid item xs={4}>
+      <SideImage src={sideImage}>
+        <ImageOverlay />
+      </SideImage>>
+    </Grid>
+    <Grid item xs={8}>
+      {children}
+    </Grid>
+  </SceneGrid>
+)
 
 export default SceneLayout

@@ -1,22 +1,29 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
 
 import blueGrey from '@material-ui/core/colors/blueGrey'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import Grid from '@material-ui/core/Grid'
-import Grow from '@material-ui/core/Grow'
-import Paper from '@material-ui/core/Paper'
-import Popper from '@material-ui/core/Popper'
-import Button from '@material-ui/core/Button'
-import MenuItem from '@material-ui/core/MenuItem'
-import MenuList from '@material-ui/core/MenuList'
+
+import {
+  ClickAwayListener,
+  Grid,
+  Grow,
+  Paper,
+  Popper,
+  Button,
+  MenuItem,
+  MenuList
+} from '@material-ui/core'
+
+import { withUser, unsetUser } from '../../state/actions'
 
 const NavContainer = styled(Grid)({
   backgroundColor: blueGrey[400]
 })
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   constructor(props: any) {
     super(props)
 
@@ -27,12 +34,25 @@ export default class NavBar extends Component {
     this.setState(state => ({ open: !state.open }))
   }
 
-  handleClose = event => {
+  handleClose = (event, action) => {
     if (this.anchorEl.contains(event.target)) {
       return
     }
 
+    // we are going back to user select
+    if (action === 'users') {
+      this.props.dispatch(unsetUser())
+    }
+
     this.setState({ open: false })
+  }
+
+  generateName = () => {
+    return this.props.user.name ? `${this.props.user.name}'s` : 'My'
+  }
+
+  generateLink = () => {
+    return this.props.user.id ? `/${this.props.user.id}/list` : '/'
   }
 
   render() {
@@ -51,7 +71,7 @@ export default class NavBar extends Component {
           >
             Menu
           </Button>
-          <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+          <Popper placement="top-end" open={open} anchorEl={this.anchorEl} transition disablePortal>
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
@@ -61,12 +81,16 @@ export default class NavBar extends Component {
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
-                      <MenuItem onClick={this.handleClose}>
-                        <Link to="/">Select User</Link>
-                      </MenuItem>
-                      <MenuItem onClick={this.handleClose}>
-                        <Link to="/list">My To-Do List</Link>
-                      </MenuItem>
+                      <Link to="/">
+                        <MenuItem onClick={e => this.handleClose(e, 'users')}>
+                          Select User
+                        </MenuItem>
+                      </Link>
+                      <Link to={this.generateLink()}>
+                        <MenuItem onClick={e => this.handleClose(e, 'todo')}>
+                          {this.generateName()} To-Do List
+                        </MenuItem>
+                      </Link>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
@@ -78,3 +102,5 @@ export default class NavBar extends Component {
     )
   }
 }
+
+export default compose(withUser)(connect()(NavBar))

@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
+import { Grid, Typography } from '@material-ui/core'
 
-import { Users, List } from './scenes'
+import Routes from './routes'
 import { NavBar } from './ui'
 
 const AppContainer = styled(Grid)({
@@ -19,8 +18,7 @@ class App extends Component {
       <AppContainer container direction="column">
         <Router>
           <NavBar />
-          <Route path="/" exact component={Users} />
-          <Route path="/list" component={List} />
+          <Routes />
         </Router>
       </AppContainer>
     )
