@@ -17,7 +17,7 @@ import {
   MenuList
 } from '@material-ui/core'
 
-import { withUser, unsetUser } from '../../state/actions'
+import { withUser, unsetUser } from 'state/actions'
 
 const NavContainer = styled(Grid)({
   backgroundColor: blueGrey[400]

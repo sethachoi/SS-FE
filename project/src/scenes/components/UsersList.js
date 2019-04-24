@@ -12,10 +12,10 @@ import {
   Paper
 } from '@material-ui/core'
 
-import AccountCircle from '@material-ui/icons/AccountCircle'
+import { AccountCircle } from '@material-ui/icons'
 
-import { SceneLayout } from '../../ui'
-import { setUser } from '../../state/actions'
+import { SceneLayout } from 'ui'
+import { setUser } from 'state/actions'
 
 const imageUrl = 'https://images.unsplash.com/photo-1525629545813-e4e7ba89e506?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
 
