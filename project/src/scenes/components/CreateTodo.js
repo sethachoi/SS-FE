@@ -6,19 +6,17 @@ import styled from 'styled-components'
 import {
   Fab,
   Paper,
-  TextField,
   Grid,
   Snackbar,
   Button,
   IconButton
 } from '@material-ui/core'
-import { DatePicker } from 'material-ui-pickers'
 import AddIcon from '@material-ui/icons/Add'
 import ErrorIcon from '@material-ui/icons/Error'
 import CloseIcon from '@material-ui/icons/Close'
 import WarningIcon from '@material-ui/icons/Warning'
 
-import { SceneLayout } from 'ui'
+import { SceneLayout, EditCreateTodoItem } from 'ui'
 import { withUser } from 'state/actions'
 import { createTodo } from 'api/todoEndpoints'
 
@@ -36,7 +34,6 @@ const ErrorText = styled.span({
 class CreateTodo extends Component {
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       name: '',
       description: '',
@@ -59,7 +56,6 @@ class CreateTodo extends Component {
   }
 
   handleSubmit = async () => {
-    console.log(this.state)
     const newTodo = {
       name: this.state.name,
       description: this.state.description,
@@ -68,7 +64,6 @@ class CreateTodo extends Component {
     }
     try {
       const response = await createTodo(this.props.user.id, newTodo)
-      console.log(response)
     } catch (e) {
       if (!this.state.showError) {
         this.toggleError()
@@ -87,28 +82,10 @@ class CreateTodo extends Component {
   }
 
   render() {
+    const { name, date, description } = this.state
     return (
       <SceneLayout sideImage={imageUrl}>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left'
-          }}
-          open={this.state.showError}
-          autoHideDuration={6000}
-          onClose={this.toggleError}
-          message={<ErrorWrapper><WarningIcon /><ErrorText>We ran into an error saving your Task</ErrorText></ErrorWrapper>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.toggleError}
-            >
-              <CloseIcon />
-            </IconButton>
-          ]}
-        />
+
         {!this.props.user.id && (
           <Redirect to="/" />
         )}
@@ -116,36 +93,13 @@ class CreateTodo extends Component {
           <p>Let's Create a New Task</p>
           <Paper elevation={1}>
             <Grid container spacing={16}>
-              <Grid item xs={4}>
-                <TextField
-                  label="Task Name"
-                  value={this.state.name}
-                  onChange={this.handleChange('name')}
-                  margin="normal"
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <DatePicker
-                  margin="normal"
-                  label="Date"
-                  value={this.state.date}
-                  onChange={this.handleDateChange}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={8}>
-                <TextField
-                  multiline
-                  rows="4"
-                  label="Description"
-                  value={this.state.description}
-                  onChange={this.handleChange('description')}
-                  margin="normal"
-                  fullWidth
-                />
-              </Grid>
+              <EditCreateTodoItem
+                name={name}
+                date={date}
+                description={description}
+                handleChange={this.handleChange}
+                handleDateChange={this.handleDateChange}
+              />
               <Grid item xs={12}>
                 <Fab color="primary" onClick={this.handleSubmit}>
                   <AddIcon />

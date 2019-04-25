@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -43,9 +43,13 @@ const UsersList = ({ dispatch }) => {
         <Paper elevation={1}>
           <List component="nav">
             {
-              userList.map(user => (
+              userList.map((user, index) => (
                 <Link key={user.id} to={`/${user.id}/list`}>
-                  <ListItem onClick={() => { handleClick(user, dispatch)}} button>
+                  <ListItem
+                    onClick={() => { handleClick(user, dispatch)}}
+                    button
+                    divider={index < userList.length - 1}
+                  >
                     <ListItemAvatar>
                       <Avatar>
                         <AccountCircle />

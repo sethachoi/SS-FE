@@ -36,7 +36,7 @@ export const deleteTodo = (id) => {
   if (!id) {
     throw(new Error('Invalid inputs'))
   }
-  return queryHandler(axios.delete(`${API_URI}/${id}`))
+  return queryHandler(axios.delete(`${API_URI}/todos/${id}`))
 }
 
 export const updateTodo = (id, todo) => {

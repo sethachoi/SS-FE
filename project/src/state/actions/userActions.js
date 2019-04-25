@@ -4,8 +4,8 @@ export const SET_USER = 'SET_USER'
 export const UNSET_USER = 'UNSET_USER'
 
 export const getUser = state => ({
-  id: state.id,
-  name: state.name
+  id: state.userApp.id,
+  name: state.userApp.name
 })
 
 export const withUser = connect(state => ({
