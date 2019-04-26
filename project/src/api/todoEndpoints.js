@@ -11,6 +11,9 @@ const queryHandler = async (call: any) => {
   }
 }
 
+/*
+ * Creates a new Todo item attached to the owner id
+ */
 export const createTodo = (ownerId, todo) => {
   if (!ownerId || !todo) {
     throw(new Error('Invalid inputs'))
@@ -18,6 +21,9 @@ export const createTodo = (ownerId, todo) => {
   return queryHandler(axios.post(`${API_URI}/${ownerId}/todos/create`, todo))
 }
 
+/*
+ * Gets all the Todos for a particular user ID
+ */
 export const getUserTodos = (ownerId) => {
   if (!ownerId) {
     throw(new Error('Invalid inputs'))
@@ -25,6 +31,9 @@ export const getUserTodos = (ownerId) => {
   return queryHandler(axios.get(`${API_URI}/${ownerId}/todos`))
 }
 
+/*
+ * Gets a specific Todo by the id
+ */
 export const getTodoById = (id) => {
   if (!id) {
     throw(new Error('Invalid inputs'))
@@ -32,6 +41,9 @@ export const getTodoById = (id) => {
   return queryHandler(axios.get(`${API_URI}/todos/${id}`))
 }
 
+/*
+ * Deletes a specific Todo
+ */
 export const deleteTodo = (id) => {
   if (!id) {
     throw(new Error('Invalid inputs'))
@@ -39,6 +51,9 @@ export const deleteTodo = (id) => {
   return queryHandler(axios.delete(`${API_URI}/todos/${id}`))
 }
 
+/*
+ * Updates a specific Todo
+ */
 export const updateTodo = (id, todo) => {
   if (!id || !todo) {
     throw(new Error('Invalid inputs'))

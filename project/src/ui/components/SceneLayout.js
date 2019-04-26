@@ -1,16 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 
 import blueGrey from '@material-ui/core/colors/blueGrey'
 
 type Props = {
   children: any,
-  sideImage: string
+  sideImage: string,
+  text: string,
+  subtext: string
 }
 
 const overlayColor = blueGrey[200]
+
+const StyledText = styled(Typography)({
+  position: 'absolute',
+  bottom: '0',
+  padding: '32px',
+  color: 'white !important'
+})
+
+const StyledSubText = styled(Typography)({
+  color: 'white !important'
+})
 
 const ImageOverlay = styled.div({
   backgroundColor: overlayColor,
@@ -25,6 +38,11 @@ const SceneGrid = styled(Grid)({
   marginTop: '8px'
 })
 
+const ContentGrid = styled(Grid)({
+  padding: '36px !important',
+  marginLeft: '-8px !important'
+})
+
 const SideImage = styled.div(({ src }) => ({
   backgroundImage: `url(${src})`,
   width: '100%',
@@ -35,16 +53,22 @@ const SideImage = styled.div(({ src }) => ({
   position: 'relative'
 }))
 
-const SceneLayout = ({ children, sideImage }: Props) => (
+const SceneLayout = ({ children, sideImage, text, subtext }: Props) => (
   <SceneGrid container spacing={16}>
     <Grid item xs={4}>
       <SideImage src={sideImage}>
         <ImageOverlay />
-      </SideImage>>
+        <StyledText variant="h2">
+          {text}
+          <StyledSubText variant="h5">
+            {subtext}
+          </StyledSubText>
+        </StyledText>
+      </SideImage>
     </Grid>
-    <Grid item xs={8}>
+    <ContentGrid container item xs={8}>
       {children}
-    </Grid>
+    </ContentGrid>
   </SceneGrid>
 )
 

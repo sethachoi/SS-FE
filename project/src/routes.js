@@ -13,7 +13,6 @@ const Routes = () => (
   <RouteContainer>
     <Route path="/" exact component={UsersList} />
     <Route path="/:id/list" component={TodoList} />
-    <Route path="/:id/create" component={CreateTodo} />
   </RouteContainer>
 )
 

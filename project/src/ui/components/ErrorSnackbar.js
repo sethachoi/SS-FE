@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Snackbar, IconButton } from '@material-ui/core'
+import { Snackbar, IconButton, Typography } from '@material-ui/core'
 import ErrorIcon from '@material-ui/icons/Error'
 import CloseIcon from '@material-ui/icons/Close'
 
@@ -20,6 +20,9 @@ const ErrorText = styled.span({
   margin: '0 16px'
 })
 
+/*
+ * Basically just throws an error popup
+ */
 const ErrorSnackbar = (props: Props) => {
   const { show, toggleError, errorMessage } = props
 

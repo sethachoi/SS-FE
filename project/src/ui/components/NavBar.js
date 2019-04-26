@@ -33,16 +33,22 @@ class NavBar extends Component {
     this.state = { open: false }
   }
 
+  /*
+   * Toggles the navbar's menu being open
+   */
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }))
   }
 
+  /*
+   * Close handler for the Popper dropdown menu
+   */
   handleClose = (event, action) => {
     if (this.anchorEl.contains(event.target)) {
       return
     }
 
-    // we are going back to user select
+    // we are going back to user select, so unset state
     if (action === 'users') {
       this.props.dispatch(unsetUser())
       this.props.dispatch(unsetTodos())
@@ -51,10 +57,16 @@ class NavBar extends Component {
     this.setState({ open: false })
   }
 
+  /*
+   * Who's list?
+   */
   generateName = () => {
     return this.props.user.name ? `${this.props.user.name}'s` : 'My'
   }
 
+  /*
+   * Generates link to user's list via user id
+   */
   generateLink = () => {
     return this.props.user.id ? `/${this.props.user.id}/list` : '/'
   }
