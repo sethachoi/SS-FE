@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { UsersList, TodoList, CreateTodo } from 'scenes'
+import { UsersList, TodoList } from 'scenes'
 
 const RouteContainer = styled.div({
   flexGrow: '1',

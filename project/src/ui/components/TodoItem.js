@@ -35,9 +35,13 @@ type Props = {
   name: any,
   owner: number,
   todos: any,
-  key: number,
+  index: number,
   divider: Boolean
 }
+
+const StyledListItem = styled(ListItem)({
+  alignItems: 'flex-end !important'
+})
 
 const DateText = styled(Typography)({
   minWidth: '30%'
@@ -48,6 +52,10 @@ const TodoInfo = styled.div({
   minWidth: '50%',
   justifyContent: 'space-between',
   alignItems: 'center'
+})
+
+const SizedItemText = styled(ListItemText)({
+  width: '225px'
 })
 
 class TodoItem extends Component {
@@ -111,14 +119,14 @@ class TodoItem extends Component {
    * Handler for updating completed-ness, ie the checkbox
    */
   handleCheck = async () => {
-    const { todos, dispatch, key, ...others } = this.props
+    const { todos, dispatch, index, ...others } = this.props
     const todoProperties = pick(others, TODO_KEYS)
     const newTodo = {...todoProperties, completed: !todoProperties.completed }
     try {
       await updateTodo(newTodo._id, newTodo)
       // same thing, new data warrants the state being updated
       let newTodos = [...todos]
-      newTodos[key] = newTodo
+      newTodos[index] = newTodo
       dispatch(setTodos(newTodos))
     } catch (e) {
       this.setState({
@@ -132,13 +140,13 @@ class TodoItem extends Component {
    * Handler for updating a todo item
    */
   handleSubmit = async () => {
-    const { key, todos, dispatch } = this.props
+    const { index, todos, dispatch } = this.props
     const { todo } = this.state
     try {
       await updateTodo(todo._id, todo)
       // same thing, new data warrants the state being updated
       let newTodos = [...todos]
-      newTodos[key] = todo
+      newTodos[index] = todo
       dispatch(setTodos(newTodos))
       this.toggleEdit()
     } catch (e) {
@@ -212,7 +220,7 @@ class TodoItem extends Component {
             show={showError}
           />
           <Checkbox checked={completed} onClick={this.handleCheck} />
-          <ListItemText primary={this.generateName(name)} secondary={description} />
+          <SizedItemText primary={this.generateName(name)} secondary={description} />
           <TodoInfo>
             <div />
               { this.generateDateText(date) }
@@ -230,7 +238,7 @@ class TodoItem extends Component {
     }
 
     return (
-      <ListItem>
+      <StyledListItem>
         <EditCreateTodoItem
           name={todo.name}
           date={todo.date}
@@ -245,7 +253,7 @@ class TodoItem extends Component {
         <Button variant="contained" color="secondary" onClick={this.toggleEdit}>
           Cancel
         </Button>
-      </ListItem>
+      </StyledListItem>
     )
   }
 }

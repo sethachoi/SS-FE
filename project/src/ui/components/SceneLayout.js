@@ -14,14 +14,13 @@ type Props = {
 
 const overlayColor = blueGrey[200]
 
-const StyledText = styled(Typography)({
+const TextBox = styled.div({
   position: 'absolute',
   bottom: '0',
-  padding: '32px',
-  color: 'white !important'
+  padding: '32px'
 })
 
-const StyledSubText = styled(Typography)({
+const StyledText = styled(Typography)({
   color: 'white !important'
 })
 
@@ -58,12 +57,14 @@ const SceneLayout = ({ children, sideImage, text, subtext }: Props) => (
     <Grid item xs={4}>
       <SideImage src={sideImage}>
         <ImageOverlay />
-        <StyledText variant="h2">
-          {text}
-          <StyledSubText variant="h5">
+        <TextBox>
+          <StyledText variant="h2">
+            {text}
+          </StyledText>
+          <StyledText variant="h5">
             {subtext}
-          </StyledSubText>
-        </StyledText>
+          </StyledText>
+        </TextBox>
       </SideImage>
     </Grid>
     <ContentGrid container item xs={8}>

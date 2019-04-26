@@ -11,7 +11,8 @@ import {
   Fab,
   Grid,
   Typography,
-  List
+  List,
+  ListItem
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import ScheduleIcon from '@material-ui/icons/Schedule'
@@ -26,6 +27,10 @@ import { withUser, withTodos, setTodos } from 'state/actions'
 import { getUserTodos, createTodo } from 'api/todoEndpoints'
 
 const imageUrl = 'https://images.unsplash.com/photo-1525629545813-e4e7ba89e506?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
+
+const StyledListItem = styled(ListItem)({
+  alignItems: 'flex-end !important'
+})
 
 const FloatingFab = styled(Fab)({
   position: 'absolute !important',
@@ -204,7 +209,7 @@ class TodoList extends Component {
             <ScrollerList>
             {todos && (
               todos.map((todo, index) => (
-                <TodoItem {...todo} key={index} divider={index < todos.length - 1 || adding} />
+                <TodoItem {...todo} index={index} key={index} divider={index < todos.length - 1 || adding} />
               ))
             )}
             </ScrollerList>
@@ -216,7 +221,7 @@ class TodoList extends Component {
               </NoTasksContainer>
             )}
             {adding && (
-              <div>
+              <StyledListItem>
                 <EditCreateTodoItem
                   name={newTodo.name}
                   date={newTodo.date}
@@ -230,7 +235,7 @@ class TodoList extends Component {
                 <Button variant="contained" color="secondary" onClick={this.cancel}>
                   Cancel
                 </Button>
-              </div>
+              </StyledListItem>
             )}
           </ScrollerPaper>
         </Grid>
